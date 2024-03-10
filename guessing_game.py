@@ -4,24 +4,95 @@ Project 1 - The Number Guessing Game
 --------------------------------
 """
 
-# Import the random module.
+# Imports the random module.
 
-# Create the start_game function.
-# Write your code inside this function.
-
-#   When the program starts, we want to:
-#   ------------------------------------
-#   1. Display an intro/welcome message to the player.
-#   2. Store a random number as the answer/solution.
-#   3. Continuously prompt the player for a guess.
-#     a. If the guess is greater than the solution, display to the player "It's lower".
-#     b. If the guess is less than the solution, display to the player "It's higher".
-
-#   4. Once the guess is correct, stop looping, inform the user they "Got it"
-#      and show how many attempts it took them to get the correct number.
-#   5. Let the player know the game is ending, or something that indicates the game is over.
-
-# ( You can add more features/enhancements if you'd like to. )
+import random
 
 
-# Kick off the program by calling the start_game function.
+# The main game function.
+
+def start_game():
+
+# Displays welcome message
+
+    print("-" * 40)
+    print("  Welcome to the Number Guessing Game!")
+    print("-" * 40)
+
+#   Gets random number
+
+    answer = random.randint(1,10)
+    number_of_guesses = 0
+    high_score = 0
+    number_of_plays = 0
+    
+# Starts loop for guesses
+
+    while True:
+
+# Asks for guess
+        
+        try:
+            guess = int(input("\nPick a number between 1 and 10: "))
+            if guess < 1 or guess > 10:
+                raise ValueError
+            number_of_guesses  += 1
+            
+# If guess is lower
+
+            if guess > answer:
+                print("It's lower") 
+
+            
+# If guess is higher
+
+            elif guess < answer:
+                print("It's higher")
+            
+# If guess is correct
+
+            else:
+                print("Got it!")
+
+# Shows number of attempts
+
+                if number_of_guesses == 1:
+                    tries = "try"
+                else:
+                    tries = "tries"
+                print("It took you", number_of_guesses, tries, ".")
+
+# Would the player like to play again?
+# Yes, set high score? game is reset, new random number, new game
+# No, Goodbye message and game ends
+
+                number_of_plays += 1
+                play_again = input("Would you like to play again? y/n ")
+
+
+
+                if play_again.lower() == "y":
+                    if number_of_plays == 1:
+                        high_score = number_of_guesses
+                    else:
+                        if number_of_guesses < high_score:
+                            high_score = number_of_guesses
+
+
+
+                    print("Great!  The High Score is", high_score)
+                    answer = random.randint(1,10)
+                    number_of_guesses = 0
+                else:
+                    print("The game is now over.  See you next time!")
+                    break
+
+# Exception handling
+
+        except ValueError:
+            print("\nI'm sorry, the number needs to be a whole number between 1 and 10.\n")
+
+
+# Starts the game!
+
+start_game()
